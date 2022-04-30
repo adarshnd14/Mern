@@ -38,6 +38,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    // console.log(event);
     const data = new FormData(event.currentTarget);
     const loginData = {
       uEmail: data.get('email'),
@@ -45,10 +46,11 @@ function Login() {
     }
 
     try {
+      //sending data in body
       const res = await axios.post('http://localhost:8000/login', loginData)
       const role = res.data.data.userValid.uRole
       localStorage.setItem('role', role)
-      console.log(res);
+      // console.log(res);
       const token = res.data.data.token;
 
       //if response is 200
@@ -75,7 +77,8 @@ function Login() {
   };
 
   return (
-    <div>
+    <div 
+    >
       <ThemeProvider theme={theme}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
@@ -125,7 +128,7 @@ function Login() {
               </Button>
 
               <Grid item>
-                <NavLink to='/register' variant='body2'>
+                <NavLink to='/register' color='white'>
                   {"Don't have an account? Register"}
                 </NavLink>
               </Grid>

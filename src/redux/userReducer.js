@@ -4,9 +4,19 @@ import { configureStore, createSlice } from "@reduxjs/toolkit"
 const initialState = {
     navState: '',
     navRole: 'user',
-    isToken:null,
-    product:null,
-    modal:false
+    isToken: null,
+    product: null,
+    modal: false,
+    toggle: false,
+    _id: 0,
+    editModal: false,
+    editProduct: {
+        pName: '',
+        pPrice: '',
+        pBrand: '',
+        pDesc: '',
+        pImg:''
+    }
 }
 
 const userSlice = createSlice({
@@ -19,14 +29,26 @@ const userSlice = createSlice({
         roleRoute(state, action) {
             state.navRole = action.payload
         },
-        tokenRoute(state, action){
+        tokenRoute(state, action) {
             state.isToken = action.payload
         },
-        fetchProduct(state, action){
+        fetchProduct(state, action) {
             state.product = action.payload
         },
-        modalOpen(state, action){
+        modalOpen(state, action) {
             state.modal = action.payload
+        },
+        tableToggle(state, action) {
+            state.toggle = action.payload
+        },
+        editId(state, action) {
+            state._id = action.payload
+        },
+        editModal(state, action) {
+            state.editModal = action.payload
+        },
+        editProduct(state, action) {
+            state.editProduct = action.payload
         }
     }
 })

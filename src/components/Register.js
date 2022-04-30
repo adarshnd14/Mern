@@ -64,7 +64,8 @@ function Register() {
 
     };
     return (
-        <div>
+        <div
+        >
             <ThemeProvider theme={theme}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline />

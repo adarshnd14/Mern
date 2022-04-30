@@ -13,6 +13,40 @@
   }
 }
 
+@media screen and (min-width: 950px) {
+  .cartCard {
+    display: flex;
+    justify-content: space-between;
+  }
+  .textMob {
+    display: none;
+  }
+  .cardHeight {
+    height: 30vh;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .mobView {
+    display: inline-block;
+  }
+  .imgStat {
+    display: block;
+  }
+  .textBox {
+    display: inline-block;
+  }
+  .btnDisp {
+    display: inline-block;
+  }
+  .contain {
+    display: block;
+  }
+  .textMob {
+    display: block;
+  }
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -35,4 +69,26 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#buttonColor {
+  background-image: linear-gradient(to right, rgb(43, 41, 39), rgb(79, 60, 11));
+}
+
+#product {
+  background-image: radial-gradient(rgb(6, 15, 114), rgb(4, 4, 4));
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#login {
+  background-image: radial-gradient(rgb(253, 252, 251), rgb(15, 15, 12));
+}
+
+.btnAlign {
+  background-image: linear-gradient(to right, rgb(43, 41, 39), rgb(79, 60, 11));
+  color: white;
+  border-radius: 5px;
+  font-size: 30px;
+  margin-top: 10px;
 }

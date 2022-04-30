@@ -11,6 +11,8 @@ import Error from './components/Error';
 import { useEffect } from 'react';
 import { userAction } from './redux/userReducer';
 import NewNav from './components/NewNav';
+import Footer from './components/homeComp/Footer';
+import Cart from './components/Cart';
 
 
 function App() {
@@ -18,13 +20,12 @@ function App() {
   const navState = state.navState
   const role = localStorage.getItem('role')
   const tokenState = localStorage.getItem('login')
-  console.log(tokenState);
+  // console.log(tokenState);
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(userAction.tokenRoute(localStorage.getItem('login')))
   }, [navState]);
-
   return (
     <div className="App">
       <Router>
@@ -35,6 +36,7 @@ function App() {
               <Route exact path='/' element={<Home />} />
               <Route path='/login' element={<Login />} />
               <Route path='/register' element={<Register />} />
+              <Route path='/product' element={<Product />} />
             </>
           }
           {tokenState && <>
@@ -42,18 +44,17 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='/product' element={<Product />} />
+            <Route path='/cart' element={<Cart/>}/>
             {role === 'admin' &&
               <Route path='/adminproduct' element={<AdminProduct />} />}
             <Route path='/logout' element={<Logout />} />
           </>
           }
           <Route path='*' element={<Error />} />
-
         </Routes>
       </Router>
-
+      <Footer />
     </div>
   );
 }
-
 export default App;

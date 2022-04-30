@@ -59,7 +59,7 @@ const NewNav = () => {
 
 
     return (
-        <AppBar position="static">
+        <AppBar position="sticky" style={{backgroundColor:'black', top:'0px'}}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography

@@ -13,6 +13,7 @@ import { userAction } from '../redux/userReducer';
 import { Button } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import AddProduct from './AddProduct';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -34,59 +35,65 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 
 function AdminProduct() {
 
   const state = useSelector(state => state)
+
   const productArr = state.product
+  const toggle = state.toggle
   const dispatch = useDispatch()
+  // console.log(toggle);
 
   useEffect(() => {
     productData()
-  }, []);
+  }, [toggle]);
 
+  //get data of all products from backend
   const productData = async () => {
     const res = await axios.get('http://localhost:8000/products/product')
     const product = res.data.data
     dispatch(userAction.fetchProduct(product))
   }
 
-  //to add product details
-  const handleAdd = () => {
+  //to edit product details
+  const handleEdit = (val) => {
+    console.log(val);
+    dispatch(userAction.editId(val._id))
+    dispatch(userAction.editProduct(val))
+    dispatch(userAction.editModal(true))
     dispatch(userAction.modalOpen(true))
   }
 
-  //to edit product details
-  const handleEdit = () => {
-
+  //to delete
+  const handleDelete = async (_id) => {
+    const token = localStorage.getItem('login')
+    try {
+      const res = await axios.delete(`http://localhost:8000/products/deleteproduct/?_id=${_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
+      dispatch(userAction.tableToggle(!toggle))
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  console.log('product arr ',productArr);
-  
+  // console.log('product arr ',productArr);
+
   return (
-    <div className=''>
-    
-    <Button
-    variant='contained'
-    className='m-3'
-    >Add Product</Button>
+    <div className='col'
+    id={'product'}>
+      <AddProduct       />
+
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Product ID</StyledTableCell>
+              <StyledTableCell>Image</StyledTableCell>
               <StyledTableCell align="right">Name</StyledTableCell>
               <StyledTableCell align="right">Brand</StyledTableCell>
               <StyledTableCell align="right">Price</StyledTableCell>
@@ -98,7 +105,7 @@ function AdminProduct() {
             {productArr && productArr.map((val) => (
               <StyledTableRow key={val._id}>
                 <StyledTableCell component="th" scope="row">
-                  {val._id}
+                  <img src={val.pImg} alt='img'/>
                 </StyledTableCell>
                 <StyledTableCell align="right">{val.pName}</StyledTableCell>
                 <StyledTableCell align="right">{val.pBrand}</StyledTableCell>
@@ -106,11 +113,11 @@ function AdminProduct() {
                 <StyledTableCell align="right">{val.pDesc}</StyledTableCell>
 
                 <StyledTableCell align="right">
-                  <Button onClick={() => { handleEdit(val._id) }}>
+                  <Button onClick={() => { handleEdit(val) }}>
                     <EditIcon color='success' />
                   </Button>
 
-                  <Button>
+                  <Button onClick={() => { handleDelete(val._id) }}>
                     <DeleteForeverIcon color='error' />
                   </Button>
 
