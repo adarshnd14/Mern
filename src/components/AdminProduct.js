@@ -35,7 +35,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-
 function AdminProduct() {
 
   const state = useSelector(state => state)
