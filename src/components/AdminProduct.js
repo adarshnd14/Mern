@@ -71,7 +71,7 @@ function AdminProduct() {
       const res = await axios.delete(`http://localhost:8000/products/deleteproduct/?_id=${_id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Bearer ${token}` 
           }
         })
       dispatch(userAction.tableToggle(!toggle))
